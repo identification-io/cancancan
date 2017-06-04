@@ -77,7 +77,8 @@ module CanCan
     end
 
     def build_resource
-      resource = resource_base.new(resource_params || {})
+      build_method = resource_base.respond_to?(:build) ? :build : :new
+      resource = resource_base.send(build_method, resource_params || {})
       assign_attributes(resource)
     end
 
